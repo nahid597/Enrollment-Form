@@ -1,0 +1,73 @@
+<div class="container">
+    <h2>Bootcamp Enrollment Form</h2>
+
+    <div class="alert alert-danger" *ngIf="errrMeg">
+        {{errrMeg}}
+    </div>
+
+    <form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate>
+        <!-- {{userForm.value | json}}
+        <hr/> {{userModel | json}}
+    -->
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" required #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" name="userName" [(ngModel)]="userModel.userName">
+            <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required </small>
+
+        </div>
+
+
+
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="userModel.email">
+        </div>
+
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" #phone="ngModel" pattern="^\d{11}$" required [class.is-invalid]="phone.invalid && phone.touched" class="form-control" name="phone" [(ngModel)]="userModel.phone">
+            <small class="text-danger" [class.d-none]="phone.valid || phone.untouched">phone bumber required and it must be 11 digits</small>
+            <!-- <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
+                <small class="text-danger" *ngIf="phone.errors.required">Phone Number required</small>
+                <small class="text-danger" *ngIf="phone.errors.pattern">Phone Number must be 11 digits</small>
+            </div>
+          -->
+        </div>
+
+        <div class="form-group">
+            <select class="custom-select" required #topi="ngModel" [class.is-invalid]="topi.invalid && topi.touched" name="selceTopics" [(ngModel)]="userModel.topics">
+            <option value="">I am Interested in</option>
+            <option *ngFor="let topic of topics">{{topic}}</option>
+
+          </select>
+
+            <small class="text-danger" [class.d-none]="topi.valid || topi.untouched">Please select topic </small>
+
+        </div>
+
+        <div class="mb-3">
+            <label>Time Prefarence</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="timePrefarence" value="morning" [(ngModel)]="userModel.timePreference">
+                <label class="form-check-label">Morning (8 am - 11 am)</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="timePrefarence" value="evening" [(ngModel)]="userModel.timePreference">
+                <label class="form-check-label">Evening (6 pm - 9 pm)</label>
+            </div>
+            <br/>
+
+            <div class="form-check mn-3">
+                <input class="form-check-input" type="checkbox" name="subscribe" [(ngModel)]="userModel.subscribe">
+                <label class="form-check-label">Send me promotional offers</label>
+            </div><br />
+
+            <button [disabled]="userForm.form.invalid" class=" btn btn-primary">Submit</button>
+
+
+        </div>
+
+    </form>
+
+</div>
